@@ -1,0 +1,5 @@
+{
+  "name": "LinguaDrama",
+  "description": "Transform your German study notes into an immersive audio drama featuring Lukas and Felix. Uses Gemini 3 Pro for script writing and Gemini 2.5 Pro TTS for high-fidelity performance.",
+  "requestFramePermissions": []
+}
