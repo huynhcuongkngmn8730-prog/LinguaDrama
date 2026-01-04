@@ -22,7 +22,6 @@ export class GeminiService {
         config: {
           systemInstruction: SYSTEM_PROMPT,
           responseMimeType: "application/json",
-          // Enable thinking budget for Pro models for better quality scripts
           thinkingConfig: { thinkingBudget: 16000 },
           responseSchema: {
             type: Type.OBJECT,
@@ -58,19 +57,26 @@ export class GeminiService {
   }
 
   async generateAudio(script: GeneratedScript): Promise<string> {
-    // Format the script into the string format expected by the multi-speaker TTS model
+    // We pass the stage directions directly into the TTS prompt to influence the performance.
     const dialogueString = script.lines
-      .map((line) => `${line.speaker}: ${line.german}`)
+      .map((line) => `${line.speaker} [Direction: ${line.stageDirection}]: ${line.german}`)
       .join('\n');
 
-    const prompt = `Perform the following dialogue naturally, with the requested emotional tones:\n${dialogueString}`;
+    const prompt = `Perform this German audio drama with MAXIMUM emotional fidelity and organic texture. 
+    Lukas is the grounded, steady anchor with a warm gravitas. 
+    Felix is the deep, alluring spark—playful, sexy, and dynamic.
+    
+    STRICTLY follow the stage directions in brackets to modulate your tone, speed, and emotion. 
+    Incorporate all non-verbal cues (sighs, chuckles, breaths) to avoid any metallic or robotic feel.
+    
+    Dialogue:
+    ${dialogueString}`;
 
     try {
       const response = await this.ai.models.generateContent({
         model: MODEL_NAMES.TTS,
         contents: [{ parts: [{ text: prompt }] }],
         config: {
-          // Use Modality.AUDIO for TTS
           responseModalities: [Modality.AUDIO],
           speechConfig: {
             multiSpeakerVoiceConfig: {
@@ -93,7 +99,6 @@ export class GeminiService {
         }
       });
 
-      // Extract raw PCM bytes from the candidate part
       const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
       if (!base64Audio) {
         throw new Error("No audio data returned from API");
