@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { FileUpload } from './components/FileUpload';
 import { ScriptDisplay } from './components/ScriptDisplay';
@@ -86,12 +87,12 @@ const App: React.FC = () => {
       <header className="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md bg-opacity-80">
         <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg text-slate-900">
+            <div className="p-2 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg text-slate-900 shadow-lg shadow-amber-500/20">
               <Sparkles size={24} strokeWidth={2.5} />
             </div>
             <div>
                <h1 className="text-xl font-serif font-bold tracking-tight text-slate-100">LinguaDrama</h1>
-               <p className="text-xs text-slate-400 uppercase tracking-widest">German Audio Workshop</p>
+               <p className="text-xs text-slate-400 uppercase tracking-widest">Premium Audio Workshop</p>
             </div>
           </div>
           {appState !== AppState.IDLE && (
@@ -122,10 +123,10 @@ const App: React.FC = () => {
           <div className="flex flex-col items-center justify-center py-20 animate-fade-in">
              <div className="text-center mb-10 max-w-2xl">
                 <h2 className="text-4xl md:text-5xl font-serif font-bold text-slate-100 mb-6 leading-tight">
-                  Turn your study notes into <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600">immersive conversations.</span>
+                  Experience your notes as <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600">immersive drama.</span>
                 </h2>
                 <p className="text-lg text-slate-400">
-                  Upload your vocabulary lists or grammar notes. We'll write a professional drama script and perform it with realistic AI voices.
+                  Upload your study materials. Lukas and Felix will bring them to life with high-fidelity acting, soft playfulness, and organic realism.
                 </p>
              </div>
              <FileUpload onFileSelect={handleFileSelect} />
@@ -137,7 +138,7 @@ const App: React.FC = () => {
           <div className="flex flex-col items-center justify-center py-32 text-center">
             <Loader2 size={48} className="text-amber-500 animate-spin mb-6" />
             <h3 className="text-xl font-semibold text-slate-200">Analyzing your notes...</h3>
-            <p className="text-slate-500 mt-2">Lukas and Felix are reviewing the material.</p>
+            <p className="text-slate-500 mt-2">Lukas is adding a playful twist to the material.</p>
           </div>
         )}
 
@@ -151,7 +152,7 @@ const App: React.FC = () => {
                   <div className="flex justify-between items-center">
                     <div>
                       <h3 className="font-semibold text-slate-200">Script Ready</h3>
-                      <p className="text-sm text-slate-400">Review the dialogue below before generating audio.</p>
+                      <p className="text-sm text-slate-400">Review the dialogue between Lukas and Felix below.</p>
                     </div>
                     <button 
                       onClick={handleGenerateAudio}
@@ -166,7 +167,7 @@ const App: React.FC = () => {
                {appState === AppState.PROCESSING_AUDIO && (
                  <div className="flex items-center justify-center py-4 gap-4">
                     <Loader2 size={24} className="text-amber-500 animate-spin" />
-                    <span className="text-slate-300 font-medium">Recording audio in the studio...</span>
+                    <span className="text-slate-300 font-medium">Lukas and Felix are recording in the studio...</span>
                  </div>
                )}
 

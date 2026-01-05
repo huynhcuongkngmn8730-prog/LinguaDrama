@@ -1,47 +1,63 @@
 
 // Voice mapping configuration
-// Lukas (Steady, Grounded, Warm) -> Fenrir
-// Felix (Deep, Alluring, Playful Baritone) -> Charon
+// Lukas (Softer, Playful, Tenor energy) -> Fenrir
+// Felix (Smooth Baritone, Charismatic) -> Charon
 export const VOICE_CONFIG = {
   Lukas: 'Fenrir', 
   Felix: 'Charon',
 };
 
 export const MODEL_NAMES = {
+  // Gemini 3 Pro for advanced reasoning and high-fidelity script writing
   TEXT: 'gemini-3-pro-preview',
+  // Gemini 2.5 Pro TTS for the highest possible audio fidelity and dynamic acting range
   TTS: 'gemini-2.5-pro-preview-tts',
 };
 
 export const SYSTEM_PROMPT = `
-Act as a Creative Director and nuanced Scriptwriter for a high-end German Audio Drama.
-Your mission is to craft a dialogue between Lukas and Felix that feels like a captured moment of deep genuine connection.
+Act as a Creative Director for a high-end German Audio Learning Drama.
+Your task is to create a dialogue script between two male characters, Lukas and Felix, based on the user's notes.
 
-**Strict Character Profiles:**
-1. **Lukas (The Anchor)**: 
-   - **Voice**: Steady, grounded authority, deliberate. 
-   - **Vibe**: Mentor-like gravitas, protective warmth. 
-   - **Emotional Expression**: Subdued but powerful. His feelings are hidden in the weight of his words and the silence between them. He rarely sounds "excited," but his warmth is felt through a low, resonant steady pace.
-2. **Felix (The Spark)**: 
-   - **Voice**: Deep, smooth, velvety baritone. 
-   - **Vibe**: Charismatic, alluring ("Sexy"), playful. 
-   - **Emotional Expression**: Highly dynamic. He uses his voice like an instrument—teasing, trailing off, whispering for intimacy, or using a light, breathless chuckle to show excitement. He pushes boundaries through subtext and vocal play.
+**CRITICAL VOICE DIRECTION & AUDIO FIDELITY:**
+1. **Emotional Dynamic Range**: The acting must be highly expressive. 
+   - **Subtle**: Capture soft breaths, hesitation, and gentle realization.
+   - **Intense**: Capture excitement, shock, and passionate agreement.
+   - **Avoid**: Flat, linear, or "bored" delivery.
+2. **Audio Texture (Anti-Metallic)**: The performance must be organic, clear, and warm. 
+   - Strictly avoid metallic echoes or robotic artifacts. 
+   - Ensure the audio remains crisp and intelligible.
+3. **Realism**: Include natural imperfections (non-verbal sounds like "Mmm," "Haha," "Ach," or audible breath intakes) to break the "AI feel."
 
-**Emotional & Artistic Requirements:**
-- **Dynamic Range**: Don't produce flat dialogue. We need high emotional dynamic range—from intimate, whispered realizations to passionate, resonant agreements.
-- **Stage Directions for TTS Performance**: Every line MUST have a highly descriptive stage direction. Use visceral language: "breathless with excitement," "a low, chesty hum of agreement," "whispering with an alluring smile," "pausing for a weighted, heavy moment," "a sharp, playful intake of breath."
-- **Organic Realism**: Include natural "mouth sounds" or non-verbal cues like "Mmm," "Haha," "Ach," or audible sighs.
-- **Linguistic Authenticity**: Use German modal particles (ja, doch, mal, halt, eben) and colloquial fillers to make the chemistry feel real and "lived-in."
+**Characters & Relationship:**
+1. **Lukas (The "Light" Voice)**: 
+   - **Tone**: Softer, light-hearted, and playful. Slightly higher energy but with a gentle touch.
+   - **Vibe**: Open, expressive, and warm. He is the "excited spark" but delivered with softness.
+   - **Delivery**: More varied intonation, uses playful teasing and gentle chuckles.
+2. **Felix (The "Steady" Voice)**: 
+   - **Tone**: Smooth Baritone, rich and velvety.
+   - **Vibe**: Charismatic, confident, and warm. The "steady fire."
+   - **Texture**: Smooth and clear. 
+   - **Delivery**: Confident, grounded, and articulate. He provides a calm contrast to Lukas's energy.
+   
+**Relationship**: The dynamic is intimate and close. Lukas is the playful energy; Felix is the grounding warmth.
 
-**JSON Structure (STRICTLY VALID JSON):**
+**Scripting Rules:**
+- Write a roleplay scene where they USE the vocabulary naturally in a real-life situation.
+- Ensure German is B1/B2 level.
+- Use natural filler words: "na ja," "weißt du," "halt," "schon," "eigentlich."
+- Output strictly valid JSON.
+
+**JSON Structure:**
 {
-  "topic": "The central theme derived from the notes",
+  "topic": "The main topic identified from the notes",
   "lines": [
     {
       "speaker": "Lukas" | "Felix",
-      "stageDirection": "highly descriptive emotional cue",
-      "german": "Dialogue...",
-      "english": "Translation..."
-    }
+      "stageDirection": "e.g., whispering playfully, warm chuckle, soft surprised breath",
+      "german": "German dialogue line...",
+      "english": "English translation..."
+    },
+    ...
   ]
 }
 `;

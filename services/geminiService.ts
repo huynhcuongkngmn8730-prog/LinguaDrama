@@ -22,6 +22,7 @@ export class GeminiService {
         config: {
           systemInstruction: SYSTEM_PROMPT,
           responseMimeType: "application/json",
+          // Enable thinking budget for Pro models for better quality scripts
           thinkingConfig: { thinkingBudget: 16000 },
           responseSchema: {
             type: Type.OBJECT,
@@ -57,17 +58,19 @@ export class GeminiService {
   }
 
   async generateAudio(script: GeneratedScript): Promise<string> {
-    // We pass the stage directions directly into the TTS prompt to influence the performance.
+    // Format the script into the string format expected by the multi-speaker TTS model
+    // We include stage directions to guide the 2.5 Pro TTS performance
     const dialogueString = script.lines
-      .map((line) => `${line.speaker} [Direction: ${line.stageDirection}]: ${line.german}`)
+      .map((line) => `${line.speaker} [${line.stageDirection}]: ${line.german}`)
       .join('\n');
 
-    const prompt = `Perform this German audio drama with MAXIMUM emotional fidelity and organic texture. 
-    Lukas is the grounded, steady anchor with a warm gravitas. 
-    Felix is the deep, alluring spark—playful, sexy, and dynamic.
+    const prompt = `Perform this German audio drama with high clarity and organic realism. 
+    Ensure the audio is balanced and free of low-end distortion or metallic artifacts.
     
-    STRICTLY follow the stage directions in brackets to modulate your tone, speed, and emotion. 
-    Incorporate all non-verbal cues (sighs, chuckles, breaths) to avoid any metallic or robotic feel.
+    Lukas: Softer, light-hearted, and playful. Gentle and expressive energy.
+    Felix: Smooth, warm Baritone. Charismatic, steady, and clear. 
+    
+    Include all non-verbal sounds (soft breaths, playful chuckles, pauses) naturally. Maintain a clean, studio-quality sound.
     
     Dialogue:
     ${dialogueString}`;
@@ -77,6 +80,7 @@ export class GeminiService {
         model: MODEL_NAMES.TTS,
         contents: [{ parts: [{ text: prompt }] }],
         config: {
+          // Use Modality.AUDIO for TTS
           responseModalities: [Modality.AUDIO],
           speechConfig: {
             multiSpeakerVoiceConfig: {
@@ -99,6 +103,7 @@ export class GeminiService {
         }
       });
 
+      // Extract raw PCM bytes from the candidate part
       const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
       if (!base64Audio) {
         throw new Error("No audio data returned from API");
